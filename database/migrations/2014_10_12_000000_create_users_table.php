@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('job_position_id')->constrained('job_positions','id')->restrictOnDelete();
+            $table->foreignId('job_position_id')->nullable()->constrained('job_positions','id')->restrictOnDelete();
             $table->foreignUuid('Manager_id')->nullable()->constrained('users','id')->restrictOnDelete();
             $table->rememberToken();
             $table->timestamps();
