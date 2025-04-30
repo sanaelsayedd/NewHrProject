@@ -112,11 +112,12 @@
                 const durationInput = document.querySelector('input[name="Duration"]');
 
                 function calculateDuration() {
-                    if (startDateInput.value && endDateInput.value) {
-                        const start = new Date(startDateInput.value);
-                        const end = new Date(endDateInput.value);
+                    const start = new Date(startDateInput.value);
+                    const end = new Date(endDateInput.value);
+                    
+                    if (start && end && !isNaN(start) && !isNaN(end)) {
                         const diffTime = Math.abs(end - start);
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
                         durationInput.value = diffDays;
                     }
                 }

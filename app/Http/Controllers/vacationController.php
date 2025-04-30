@@ -25,10 +25,14 @@ class vacationController extends Controller
             'Comments' => 'nullable|string|max:500',
         ]);
 
-        // Add the logged-in user's ID
-        $validated['employee_id'] = Auth::id();
-        $validated['RequestDate'] = now();
-        $validated['Status'] = 'Pending';
+        Vacation::create([
+            'VacationTypeID' => $validated['VacationTypeID'],
+            'Start_Date' => $validated['Start_Date'],
+            'End_Date' => $validated['End_Date'],
+            'Duration' => $validated['Duration'],
+            'Comments' => $validated['Comments'] ?? null,
+            'employee_id' => Auth::id(),
+        ]);
 
         try {
             Vacation::create($validated);
