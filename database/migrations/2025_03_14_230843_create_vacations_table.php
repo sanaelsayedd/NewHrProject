@@ -21,7 +21,7 @@ return new class extends Migration
             $table->dateTime('RequestDate')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('ApprovalDate')->nullable();            
             $table->string('Status');
-            $table->string('Comments');
+            $table->string('Comments')->nullable();;
             $table->timestamps();
         });
     }
