@@ -12,6 +12,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Auth\VerifyEmail;
 use Filament\Notifications\Notification;
@@ -112,7 +113,7 @@ class UserResource extends Resource
                                             : ['unique:users,username'];
                                     }),
                                     Select::make(name: 'jobPosition_id')->options(options: jobPosition::pluck('Job_Title','id'))->required(),
-
+                                    TextInput::make('PhoneNumber')->required(),
                                 Forms\Components\TextInput::make('email')
                                     ->email()
                                     ->required()
@@ -168,6 +169,7 @@ class UserResource extends Resource
                     ->description(fn(Model $record) => $record->firstname . ' ' . $record->lastname)
                     ->searchable(),
                 TextColumn::make('jobPosition.Job_Title')->label('jobPosition'),
+                TextColumn::make('PhoneNumber')->label('Phone Number'),
                 Tables\Columns\TextColumn::make('roles.name')->label('Role')
                     ->formatStateUsing(fn($state): string => Str::headline($state))
                     ->colors(['info'])
