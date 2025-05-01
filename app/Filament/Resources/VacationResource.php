@@ -39,14 +39,15 @@ class VacationResource extends Resource
                 DatePicker::make('RequestDate')->required(),
                 DatePicker::make('ApprovalDate')->required(),
                 Select::make('Status')
-                ->label('Status')
-                ->default(0)
-                ->options([
-                    1 => "approved",   
-                    0 => "rejected",  
-                ])
-                ->native(false)
-                ->required(),
+    ->label('Status')
+    ->default(2)
+    ->options([
+        2 => 'Pending',
+        1 => 'Approved',
+        0 => 'Rejected',
+    ])
+    ->required(),
+
 
                 TextInput::make('Comments'),
 
@@ -66,8 +67,26 @@ class VacationResource extends Resource
                 TextColumn::make('RequestDate'),
                 TextColumn::make('ApprovalDate'),
                 IconColumn::make('Status')
-                ->boolean()
-                ->alignCenter(),
+                ->alignCenter()
+                ->color(fn ($state) => match ((int) $state) {
+                    2 => 'warning',   // Pending
+                    1 => 'success',   // Approved
+                    0 => 'danger',    // Rejected
+                })
+                
+                ->icon(fn ($state) => match ((int) $state) {
+                    2 => 'heroicon-o-clock',
+                    1 => 'heroicon-o-check-circle',
+                    0 => 'heroicon-o-x-circle',
+                })
+                
+                ->tooltip(fn ($state) => match ((int) $state) {
+                    2 => 'Pending',
+                    1 => 'Approved',
+                    0 => 'Rejected',
+                }),
+                
+            
                 TextColumn::make('Comments'),
 
             ])

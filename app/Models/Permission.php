@@ -12,6 +12,7 @@ class Permission extends Model
         'EndDate',
         'Status',
         'Permission_Type_id',
+        'employee_id',
 
     ];
     public function permissionBalances()
@@ -21,5 +22,9 @@ class Permission extends Model
 public function permissionType()
 {
     return $this->belongsTo(PermissionType::class, 'Permission_Type_id');
+}
+public function employee()
+{
+    return $this->belongsTo(User::class, 'employee_id');
 }
 }

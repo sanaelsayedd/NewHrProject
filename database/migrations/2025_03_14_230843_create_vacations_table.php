@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,15 +14,16 @@ return new class extends Migration
     {
         Schema::create('vacations', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('employee_id')->constrained('users','id')->restrictOnDelete();
-            $table->foreignId('VacationTypeID')->constrained('vacation_types','id')->restrictOnDelete();
-            $table->dateTime('Start_Date');
-            $table->dateTime('End_Date');
-            $table->string('Duration');
+            $table->uuid('employee_id'); 
+            $table->foreign('employee_id')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('VacationTypeID')->constrained('vacation_types', 'id')->restrictOnDelete();
+            $table->date('Start_Date'); 
+            $table->date('End_Date');  
+            $table->integer('Duration'); 
             $table->dateTime('RequestDate')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('ApprovalDate')->nullable();            
-            $table->string('Status');
-            $table->string('Comments')->nullable();;
+            $table->string(column: 'Status')->default('Pending'); 
+            $table->string('Comments')->nullable();
             $table->timestamps();
         });
     }

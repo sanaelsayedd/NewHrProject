@@ -12,11 +12,13 @@
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg p-4">
+            <div class="form-container">
+                <h2 class="form-header">Request Vacation</h2>
+
                 @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <div class="alert alert-success">
                         {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
                     </div>
                 @endif
 
@@ -79,7 +81,7 @@
                         <label for="exampleFormControlInput1" class="form-label">Duration (days):</label>
 
                         <input type="number" name="Duration" class="form-control @error('Duration') is-invalid @enderror" 
-                               required min="1" value="{{ old('Duration') }}" readonly>
+                               required min="1" value="{{ old('Duration') }}">
                         @error('Duration')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -105,35 +107,5 @@
 
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const startDateInput = document.querySelector('input[name="Start_Date"]');
-                const endDateInput = document.querySelector('input[name="End_Date"]');
-                const durationInput = document.querySelector('input[name="Duration"]');
-
-                function calculateDuration() {
-                    const start = new Date(startDateInput.value);
-                    const end = new Date(endDateInput.value);
-                    
-                    if (start && end && !isNaN(start) && !isNaN(end)) {
-                        const diffTime = Math.abs(end - start);
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
-                        durationInput.value = diffDays;
-                    }
-                }
-
-                startDateInput.addEventListener('change', calculateDuration);
-                endDateInput.addEventListener('change', calculateDuration);
-
-                // Auto-dismiss alerts after 5 seconds
-                const alerts = document.querySelectorAll('.alert');
-                alerts.forEach(alert => {
-                    setTimeout(() => {
-                        const bsAlert = new bootstrap.Alert(alert);
-                        bsAlert.close();
-                    }, 5000);
-                });
-            });
-        </script>
     @endpush
 </x-app-layout>
